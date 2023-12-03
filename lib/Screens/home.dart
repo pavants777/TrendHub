@@ -1,11 +1,11 @@
 import 'dart:convert';
-
-import 'package:circular_menu/circular_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trendhub/Models/Product.dart';
 import 'package:trendhub/Models/UserModels.dart';
+import 'package:trendhub/Routes/routes.dart';
+import 'package:trendhub/Screens/product_details.dart';
 import 'package:trendhub/utils/DrawerForApp.dart';
 import 'package:trendhub/utils/companyName.dart';
 import 'package:http/http.dart' as http;
@@ -103,7 +103,13 @@ class _HomeState extends State<Home> {
                 itemCount: products!.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ProductScreen(product: products![index])));
+                      },
                       title: Stack(
                         children: [
                           _itemarange(index),
@@ -113,27 +119,28 @@ class _HomeState extends State<Home> {
                 },
               ),
       ),
-      floatingActionButton: CircularMenu(
-        startingAngleInRadian: 3.14,
-        endingAngleInRadian: 2 * 3.14,
-        items: [
-          CircularMenuItem(
-            onTap: () {},
-            icon: Icons.share,
-          ),
-          CircularMenuItem(
-            onTap: () {},
-            icon: Icons.shopping_cart,
-          ),
-          CircularMenuItem(
-            onTap: () {},
-            icon: Icons.shopping_bag_outlined,
-          ),
-          CircularMenuItem(
-            onTap: () {},
-            icon: Icons.person_outline,
-          ),
-        ],
+      bottomNavigationBar: BottomAppBar(
+          height: 70,
+          shape: CircularNotchedRectangle(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(Icons.home),
+              SizedBox(
+                width: 20,
+              ),
+              Icon(Icons.shopping_cart),
+            ],
+          )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+            child: Icon(Icons.shopify)),
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16.0)),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

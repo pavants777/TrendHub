@@ -62,8 +62,7 @@ class _LogInState extends State<LogIn> {
           GestureDetector(
             onTap: () async {
               try {
-                final result =
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
                   email: _email.text,
                   password: _password.text,
                 );

@@ -91,8 +91,7 @@ class _SignInState extends State<SignIn> {
                       email: _email.text, password: _password.text)
                   .then((value) {
                 createUser(_email.text, _userName.text);
-                Navigator.pushNamed(context, Routes.home,
-                    arguments: [_email.text]);
+                Navigator.pushNamed(context, Routes.emailVerification);
                 _email.clear();
                 _password.clear();
               }).onError((error, stackTrace) {

@@ -20,8 +20,7 @@ class _UserState extends State<UserCheck> {
       if (!_initialized) {
         _initialized = true;
         if (user != null) {
-          Navigator.pushReplacementNamed(context, Routes.home,
-              arguments: [userEmail]);
+          Navigator.pushReplacementNamed(context, Routes.emailVerification);
         } else {
           Navigator.pushReplacementNamed(context, Routes.logIn);
         }
