@@ -10,10 +10,13 @@ import 'package:trendhub/Models/UserModels.dart';
 import 'package:trendhub/constant/constant.dart';
 import 'package:trendhub/functions/databasecollection.dart';
 import 'package:trendhub/utils/DeletAccount.dart';
+import 'package:trendhub/utils/EdiitScreen.dart';
+import 'package:trendhub/utils/Setting.dart'; // Assuming you have a Setting widget
 import 'package:trendhub/utils/logout.dart';
 
 class Profile extends StatefulWidget {
   UserModel? user = UserModel();
+
   @override
   State<Profile> createState() => _ProfileState();
 }
@@ -21,12 +24,20 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   late User? userinfo;
   PlatformFile? pickedfile;
+  PlatformFile? pickedBackground;
   UploadTask? uploadTask;
 
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
     setState(() {
       pickedfile = result?.files.first;
+    });
+  }
+
+  Future selectFileBackground() async {
+    final result = await FilePicker.platform.pickFiles();
+    setState(() {
+      pickedBackground = result?.files.first;
     });
   }
 
@@ -40,7 +51,6 @@ class _ProfileState extends State<Profile> {
     uploadTask = ref.putFile(file);
     final snapshot = await uploadTask!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
-    print('Download $urlDownload');
     setState(() {
       widget.user!.userImage = urlDownload;
       updateUserImage(urlDownload, widget.user!.userEmail);
@@ -48,18 +58,18 @@ class _ProfileState extends State<Profile> {
   }
 
   Future uploadFileBackground() async {
-    if (pickedfile == null) {
+    if (pickedBackground == null) {
       return;
     }
-    final path = '${widget.user!.userEmail}/background/${pickedfile!.name}';
-    final file = File(pickedfile!.path ?? '');
+    final path =
+        '${widget.user!.userEmail}/background/${pickedBackground!.name}';
+    final file = File(pickedBackground!.path ?? '');
     final ref = FirebaseStorage.instance.ref().child(path);
     uploadTask = ref.putFile(file);
     final snapshot = await uploadTask!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
-    print('Download $urlDownload');
     setState(() {
-      widget.user!.userImage = urlDownload;
+      widget.user!.userBagroundImage = urlDownload;
       updateUserImage(urlDownload, widget.user!.userEmail);
     });
   }
@@ -122,67 +132,99 @@ class _ProfileState extends State<Profile> {
         title: Text(
           'Profile',
           style: TextStyle(
-              fontSize: 25, letterSpacing: 3.0, fontWeight: FontWeight.bold),
+              fontSize: screenWidth * 0.07,
+              letterSpacing: 3.0,
+              fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Stack(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    selectFile();
-                    uploadFileBackground();
-                  },
-                  child: Container(
-                    width: screenWidth,
-                    height: screenWidth * 0.4,
-                    child: Image.network(widget.user!.userBagroundImage ??
-                        Constant.backgroundimageurl),
-                  ),
-                ),
-                Container(
-                  width: screenWidth,
-                  height: screenWidth * 0.7,
-                ),
-                Positioned(
-                    bottom: 50,
-                    left: screenWidth * 0.36,
-                    child: GestureDetector(
-                      onTap: () {
-                        selectFile();
-                        uploadFile();
-                      },
-                      child: CircleAvatar(
-                        radius: 64,
-                        backgroundImage: NetworkImage(
-                            widget.user!.userImage ?? Constant.imageUrl),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          selectFileBackground();
+                          uploadFileBackground();
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: screenWidth * 0.4,
+                          child: Image.network(
+                            widget.user!.userBagroundImage ??
+                                Constant.backgroundimageurl,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                    )),
+                      Container(
+                        width: double.infinity,
+                        height: screenWidth * 0.7,
+                      ),
+                      Positioned(
+                        bottom: screenWidth * 0.15,
+                        left: screenWidth * 0.5 - 64,
+                        child: GestureDetector(
+                          onTap: () {
+                            selectFile();
+                            uploadFile();
+                          },
+                          child: CircleAvatar(
+                            radius: 64,
+                            backgroundImage: NetworkImage(
+                                widget.user!.userImage ?? Constant.imageUrl),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: screenWidth,
+                    height: 1,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    '${widget.user!.userName}',
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.07,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    '${widget.user!.userEmail}',
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.035,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      EditScreen(context),
+                      SettingsScreen(context),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                LogOut(context),
+                DeletAccount(context),
               ],
             ),
-
-            // Other Profile Information
-            const SizedBox(height: 20),
-            Text(
-              '${widget.user!.userName}',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              '${widget.user!.userEmail}',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            LogOut(context),
-            const SizedBox(height: 20),
-            DeletAccount(context),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
