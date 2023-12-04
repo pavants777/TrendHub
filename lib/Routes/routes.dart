@@ -6,6 +6,7 @@ import 'package:trendhub/Screens/homepage.dart';
 import 'package:trendhub/Screens/login.dart';
 import 'package:trendhub/Screens/signin.dart';
 
+
 class Routes {
   static const String homepage = '/';
   static const String signIn = '/signin';
