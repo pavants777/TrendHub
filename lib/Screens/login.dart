@@ -66,9 +66,7 @@ class _LogInState extends State<LogIn> {
                   email: _email.text,
                   password: _password.text,
                 );
-                Navigator.pushNamed(context, Routes.home, arguments: [
-                  _email.text,
-                ]);
+                Navigator.pushReplacementNamed(context, Routes.home);
                 _email.clear();
                 _password.clear();
               } catch (error) {
@@ -124,12 +122,12 @@ class _LogInState extends State<LogIn> {
                 width: 100,
                 color: const Color.fromARGB(255, 255, 255, 255),
               ),
-              SizedBox(width: 10),
-              Text(
+              const SizedBox(width: 10),
+              const Text(
                 'OR',
                 style: TextStyle(fontSize: 16),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Container(
                 height: 1,
                 width: 100,

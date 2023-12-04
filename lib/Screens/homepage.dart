@@ -6,7 +6,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void navigatonChange() {
-      Navigator.pushNamed(context, Routes.userCheck);
+      Navigator.pushReplacementNamed(context, Routes.userCheck);
     }
 
     Future.delayed(const Duration(seconds: 5), navigatonChange);

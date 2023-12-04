@@ -77,7 +77,11 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.person_outline)),
+          IconButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, Routes.profilescreen);
+              },
+              icon: Icon(Icons.person_outline)),
         ],
       ),
       drawer: DrawerForApp(

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trendhub/Routes/routes.dart';
+import 'package:trendhub/constant/constant.dart';
 import 'package:trendhub/functions/databasecollection.dart';
 import 'package:trendhub/utils/alert.dart';
 import 'package:trendhub/utils/companyName.dart';
@@ -90,7 +91,8 @@ class _SignInState extends State<SignIn> {
                   .createUserWithEmailAndPassword(
                       email: _email.text, password: _password.text)
                   .then((value) {
-                createUser(_email.text, _userName.text);
+                createUser(_email.text, _userName.text, Constant.imageUrl,
+                    Constant.backgroundimageurl);
                 Navigator.pushNamed(context, Routes.emailVerification);
                 _email.clear();
                 _password.clear();
@@ -126,7 +128,7 @@ class _SignInState extends State<SignIn> {
               Text("Already have an Account ?"),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, Routes.logIn);
+                  Navigator.pushReplacementNamed(context, Routes.logIn);
                 },
                 child: const Text(
                   ' Log In',

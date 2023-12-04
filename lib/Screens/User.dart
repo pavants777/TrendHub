@@ -20,7 +20,13 @@ class _UserState extends State<UserCheck> {
       if (!_initialized) {
         _initialized = true;
         if (user != null) {
-          Navigator.pushReplacementNamed(context, Routes.emailVerification);
+          bool isEmailVerified =
+              FirebaseAuth.instance.currentUser!.emailVerified;
+          if (!isEmailVerified) {
+            Navigator.pushReplacementNamed(context, Routes.emailVerification);
+          } else {
+            Navigator.pushReplacementNamed(context, Routes.home);
+          }
         } else {
           Navigator.pushReplacementNamed(context, Routes.logIn);
         }
@@ -30,17 +36,10 @@ class _UserState extends State<UserCheck> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AuthCheckWidget(),
-    );
-  }
-}
-
-class AuthCheckWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(),
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trendhub/Routes/routes.dart';
+import 'package:trendhub/functions/databasecollection.dart';
 import 'package:trendhub/utils/alert.dart';
 
 class EmailVerification extends StatefulWidget {
@@ -18,11 +17,12 @@ class _EmailVerificationState extends State<EmailVerification> {
   @override
   void initState() {
     super.initState();
-    //check is user is verified is email or not
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
     if (!isEmailVerified) {
       sendVerificationEmail();
+    } else {
+      Navigator.pushReplacementNamed(context, Routes.home);
     }
 
     timer = Timer.periodic(Duration(seconds: 3), (_) {
@@ -36,7 +36,7 @@ class _EmailVerificationState extends State<EmailVerification> {
       isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
     });
     if (isEmailVerified) {
-      timer?.cancel();
+      timer!.cancel();
       Navigator.pushNamed(context, Routes.home);
     }
   }
@@ -65,45 +65,45 @@ class _EmailVerificationState extends State<EmailVerification> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'Verify Your Email',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             'Email Verification Is Sent To Your Email',
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             'Check Your InBox',
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextButton(
               onPressed: () {
                 sendVerificationEmail();
               },
-              child: Text(
+              child: const Text(
                 'Resend It',
                 style: TextStyle(color: Colors.blue),
               )),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           TextButton(
               onPressed: () {
-                FirebaseAuth.instance.currentUser!.delete();
+                deletUser();
                 Navigator.pushNamed(context, Routes.logIn);
               },
-              child: Text(
+              child: const Text(
                 'Cancel',
                 style: TextStyle(color: Colors.blue),
               )),

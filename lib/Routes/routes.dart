@@ -4,6 +4,7 @@ import 'package:trendhub/Screens/email_verification.dart';
 import 'package:trendhub/Screens/home.dart';
 import 'package:trendhub/Screens/homepage.dart';
 import 'package:trendhub/Screens/login.dart';
+import 'package:trendhub/Screens/profile.dart';
 import 'package:trendhub/Screens/signin.dart';
 
 class Routes {
@@ -13,6 +14,7 @@ class Routes {
   static const String home = '/home';
   static const String userCheck = '/user';
   static const String emailVerification = '/verification';
+  static const String profilescreen = '/profile';
 
   static Map<String, WidgetBuilder> routes = {
     homepage: (context) => HomePage(),
@@ -21,5 +23,6 @@ class Routes {
     home: (context) => Home(),
     userCheck: (context) => UserCheck(),
     emailVerification: (context) => EmailVerification(),
+    profilescreen: (context) => Profile(),
   };
 }
