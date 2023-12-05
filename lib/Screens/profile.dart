@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:trendhub/Models/UserModels.dart';
@@ -11,7 +9,7 @@ import 'package:trendhub/constant/constant.dart';
 import 'package:trendhub/functions/databasecollection.dart';
 import 'package:trendhub/utils/DeletAccount.dart';
 import 'package:trendhub/utils/EdiitScreen.dart';
-import 'package:trendhub/utils/Setting.dart'; // Assuming you have a Setting widget
+import 'package:trendhub/utils/Setting.dart';
 import 'package:trendhub/utils/logout.dart';
 
 class Profile extends StatefulWidget {
