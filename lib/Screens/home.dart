@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:trendhub/Models/Product.dart';
 import 'package:trendhub/Models/UserModels.dart';
 import 'package:trendhub/Routes/routes.dart';
+import 'package:trendhub/Screens/ChatScreen.dart';
 import 'package:trendhub/Screens/product_details.dart';
 import 'package:trendhub/utils/DrawerForApp.dart';
 import 'package:trendhub/utils/companyName.dart';
@@ -137,10 +138,13 @@ class _HomeState extends State<Home> {
             ],
           )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => ChatScreen()));
+        },
         child: Container(
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-            child: Icon(Icons.shopify)),
+            child: Icon(Icons.add)),
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16.0)),

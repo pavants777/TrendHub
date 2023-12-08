@@ -123,7 +123,7 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/');
+            Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back),
         ),
